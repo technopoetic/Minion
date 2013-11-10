@@ -47,10 +47,10 @@ def get_settings():
 # Default settings
     settings = SafeConfigParser()
     settings.add_section('notes')
-    settings.set('notes', 'home', '~/Dropbox/notes')
+    settings.set('notes', 'home', '~/Dropbox/Notes')
     settings.add_section('compose')
-    settings.set('compose', 'template', '~/Minion/template.txt')
-    settings.set('compose', 'extension', '.txt')
+    settings.set('compose', 'template', '~/code/Minion/template.txt')
+    settings.set('compose', 'extension', '.md')
     settings.set('compose', 'editor', 'vim')
     settings.add_section('date')
     settings.set('date', 'format', '%%Y-%%m-%%d')
@@ -1207,7 +1207,7 @@ def get_filename_for_title(topic, notes_dir=None):
 
     return filename
 
-def new_note(args, quick, editor, notes_dir=None):
+def new_note(args, quick, editor, template='note', notes_dir=None):
     '''Without any distractions, create a new file, from a template.
     
     Use a file-system safe filename, based on the title.
@@ -1220,7 +1220,8 @@ def new_note(args, quick, editor, notes_dir=None):
 
     # Get template file
     settings = get_settings()
-    template_file = settings.get('compose', 'template')
+    template_file = settings.get('compose', template + '_template')
+    print template_file
     template_file = os.path.expanduser(template_file)
     f = open(template_file, 'r')
     template_text = f.readlines()

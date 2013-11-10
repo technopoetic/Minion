@@ -9,7 +9,7 @@ Usage:
     minion find [--archives] [--files] <text> ...
     minion folder <text> ... 
     minion folders 
-    minion journal [--folder=<folder>] [--editor=<editor>] <text> ...
+    minion journal [--folder=<folder>] [--editor=<editor>] [--text=<text>] ...
     minion here [--editor=<editor>] <text> ...  
     minion list [--archives] [--max=<max>] [--files] <text> ...
     minion log <log> <comment> ...
@@ -266,12 +266,15 @@ if args['publish']:
 def minion_journal(args):
     '''Start a journal article, which always includes the current date
     in the filename.'''
+    #print args
     notes_dir = get_notes_dir(args)
     today_string = datetime.datetime.today().strftime(get_date_format())
     args['<text>'] = ['Journal ' + today_string] + args['<text>']
+    #print "Calling new_note method"
     brain_of_minion.new_note(args['<text>'], 
             quick=args['remind'],
             editor=args['--editor'], 
+            template='journal',
             notes_dir=notes_dir)
 
 def minion_remind(args):
